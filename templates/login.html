@@ -3,23 +3,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Login</h2>
-<p></p>
-<form>
-    <div class="col-md-6">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-      <input id="email" type="email" class="form-control" name="email" placeholder="Email">
-    </div>
-    <p></p>
-    <div class="input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-      <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-    </div>
-    <div class="checkbox">
-        <label><input type="checkbox"> Remember me</label>
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </div>
+
+  <div class="container">
+    <h2>Login</h2>
+    <p></p>            
+    
+    <form>
+    <table class="table table-bordered">
+      
+      <tbody>
+        <tr>
+          <td><div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email">
+          </div></td>
+         
+        </tr>
+        <tr>
+          <td><div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+          </div></td>
+          
+        </tr>
+        <tr>
+          <td><div class="checkbox">
+            <label><input type="checkbox"> Remember me</label>
+          </div></td>
+        </tr>
+        <tr>
+          <td> <button type="submit" class="btn btn-default">Submit</button></td>
+          
+        </tr>
+        
+      </tbody>
+    </table>
   </form>
+  </div>
 {% endblock %}
