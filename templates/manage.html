@@ -2,5 +2,20 @@
 
 {% block content %}
 
-    <p>This is manage.</p>
+<h2>Manage Categories</h2>
+<form>
+  <label for="category-name">Category Name:</label>
+  <input type="text" id="category-name" name="category-name">
+  <button type="submit">Add Category</button>
+</form>
+
+<h3>Existing Categories</h3>
+<ul>
+  <li>some_random_category
+    <button type="button">Delete</button>
+  </li>
+  <li>Some other category
+    <button type="button">Delete</button>
+  </li>
+</ul>
 {% endblock %}
