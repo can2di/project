@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <body>
+    <h2>Add your Expense</h2>
+    <form action="/update_expense" method="post">
+      <label for="expense_id">Expense ID:</label>
+      <input type="text" id="expense_id" name="expense_id" required><br><br>
+  
+      <label for="new_amount">Amount:</label>
+      <input type="number" id="new_amount" name="new_amount" required><br><br>
+  
+      <label for="new_category">Category:</label>
+      <input type="text" id="new_category" name="new_category"><br><br>
+  
+      <label for="new_description">Description:</label>
+      <textarea id="new_description" name="new_description"></textarea><br><br>
+  
+      <input type="submit" value="Add Expense">
+    </form>
+  </body>
+{% endblock %}
