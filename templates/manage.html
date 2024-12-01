@@ -31,21 +31,27 @@
 
 <form>
   <table class="table table-bordered">
+    <thead>
+      <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Description</th>
+      </tr>
+  </thead>
     
     <tbody>
+      {% for row in data %}
       <tr>
-        <td>Household</td>
-        <td><button type="button">Delete</button></td>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
       </tr>
-      <tr>
-        <td>Leisure</td>
-        <td><button type="button">Delete</button></td>
-      </tr>
-      <tr>
-        <td>Family</td>
-        <td><button type="button">Delete</button></td>
-      </tr>         
-    </tbody>
+      {% endfor %}
+  </tbody>
   </table>
 </form>
 </div>

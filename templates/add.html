@@ -4,31 +4,32 @@
 
 
   <div class="container">
-    <h2>Add yor Expense</h2>
+    <h2>Add your Expense/Income</h2>
     <p></p>            
     
-    <form action="/update_expense" method="post"></form>
+    <form action="/add_expense" method="POST">
     <table class="table table-bordered">
       
       <tbody>
         <tr>
-          <td><label for="expense_id">Expense ID:</label></td>
-          <td><input type="text" id="expense_id" name="expense_id" required><br><br></td>
+          <td><label for="type">Type:</label></td>
+          <td><input type="text" id="type" name="type"><br><br></td>
         </tr>
         <tr>
-          <td><label for="new_amount">Amount:</label></td>
-          <td><input type="number" id="new_amount" name="new_amount" required><br><br></td>
+        <tr>
+          <td><label for="amount">Amount:</label></td>
+          <td><input type="number" id="amount" name="amount" required><br><br></td>
         </tr>
         <tr>
-          <td><label for="new_category">Category:</label></td>
-          <td><input type="text" id="new_category" name="new_category"><br><br></td>
+          <td><label for="category">Category:</label></td>
+          <td><input type="text" id="category" name="category"><br><br></td>
+        </tr>
+          <td><label for="description">Description:</label></td>
+          <td><textarea id="description" name="description"></textarea><br><br></td>
         </tr>
         <tr>
-          <td><label for="new_description">Description:</label></td>
-          <td><textarea id="new_description" name="new_description"></textarea><br><br></td>
-        </tr>
-        <tr>
-          <td><button type="button" class="btn">Add Expense</button></td>
+          <td><input type="submit" value="Submit">
+          </td>
           <td></td>
         </tr>
       </tbody>

@@ -2,39 +2,59 @@
 
 {% block content %}
 
+
 <div class="container">
-  <h2>View your Expenses</h2>
+  <h2>Manage Transactions</h2>
   <p></p>            
-  <table class="table table-hover">
+  <form action="/sort" method="POST"></form>
+    <table class="table table-bordered">
+      
+      <tbody>
+        
+        <tr>
+          <td><td><input type="submit" value="Submit"></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </form>
+  
+
+
+  <h2>Transactions</h2>
+  <p></p>            
+  
+  
+
+<form>
+  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Expense ID</th>
-        <th>Amount</th>
-        <th>Category</th>
-        <th>Description</th>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Actions</th>
       </tr>
-    </thead>
+  </thead>
+    
     <tbody>
+      {% for row in data %}
       <tr>
-        <td>A122323</td>
-        <td>£22</td>
-        <td>Bill</td>
-        <td>My electric</td>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+          <td>
+            <a href="/edit/{{ row[0] }}">Edit</a> |
+            <a href="/delete/{{ row[0] }}">Delete</a>
+          </td>
       </tr>
-      <tr>
-        <td>A122324</td>
-        <td>£26</td>
-        <td>Leisure</td>
-        <td>Pub and Food</td>
-      </tr>
-      <tr>
-        <td>A122325</td>
-        <td>£29</td>
-        <td>Holiday</td>
-        <td>Travel pack</td>
-      </tr>
-    </tbody>
+      {% endfor %}
+  </tbody>
   </table>
+</form>
 </div>
-  
 {% endblock %}

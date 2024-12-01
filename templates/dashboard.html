@@ -11,6 +11,26 @@
           <th>Status</th>
         </tr>
       </thead>
+
+      <!-- <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            {% if row[1] <= 500 %}
+                <td>Low Value: {{ row[1] }}</td>
+            {% elif row[1] <= 1000 %}
+                <td>Medium Value: {{ row[1] }}</td>
+            {% else %}
+                <td>High Value: {{ row[1] }}</td>
+            {% endif %}
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody> -->
+
+
       <tbody>
             
         <tr class="success">
