@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Transaction</title>
+</head>
+<body>
+    <h1>Edit Transaction</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <table>
+            <tbody>
+                <tr>
+                    <th>{{ form.type.label }}</th>
+                    <td>{{ form.type(size=32) }}</td>
+                    {% if form.type.errors %}
+                        {% for error in form.type.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    {% endif %}
+                    <th>{{ form.amount.label }}</th>
+                    <td>{{ form.amount(size=32) }}</td>
+                    {% if form.amount.errors %}
+                        {% for error in form.amount.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    {% endif %}
+                    <th>{{ form.category.label }}</th>
+                    <td>{{ form.category(size=32) }}</td>
+                    {% if form.category.errors %}
+                        {% for error in form.category.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    {% endif %}
+                    <th>{{ form.date.label }}</th>
+                    <td>{{ form.date(size=32) }}</td>
+                    {% if form.date.errors %}
+                        {% for error in form.date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    {% endif %}
+                    <th>{{ form.description.label }}</th>
+                    <td>{{ form.description(size=32) }}</td>
+                    {% if form.description.errors %}
+                        {% for error in form.description.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+        <p>{{ form.submit() }}</p>
+    </form>
+</body>
+</html>

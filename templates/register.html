@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h3>You not logged in Register</h3>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="alert
+ alert-{{ category }}">
+              {{ message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.hidden_tag()
+ }}  
+        <div class="form-group">
+            {{ form.user.label }} {{ form.user(size=30) }}
+            {% if form.user.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.user.errors[0] }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }} {{ form.password(size=30) }}
+            {% if form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.password.errors[0] }}
+                </div>
+            {% endif %}
+        </div>
+       
+        {{ form.submit }}
+    </form>
+</body>
+</html>

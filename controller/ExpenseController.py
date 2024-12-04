@@ -47,6 +47,7 @@ class ExpenseController:
         def edit_expense(id):
             db = Database('expenses.db')
             expense = db.get_expense_by_id(id)
+            print(f"Expense ID: {expense}")
             return render_template('edit_expense.html', expense=expense)
 
         @self.app.route('/delete/<int:id>')

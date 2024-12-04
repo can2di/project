@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Expense</title>
+</head>
+<body>
+    {% if expense %}
+        <h2>Edit Expense</h2>
+        <form method="POST" action="/update_expense">
+            <input type="hidden" name="expense_id" value="{{ expense.id }}">
+            </form>
+    {% else %}
+        <p>Expense not found.</p>
+    {% endif %}
+</body>
+</html>

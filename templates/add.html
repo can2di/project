@@ -1,39 +1,54 @@
-{% extends "base.html" %}
-
-{% block content %}
 
 
-  <div class="container">
-    <h2>Add your Expense/Income</h2>
-    <p></p>            
-    
-    <form action="/add_expense" method="POST">
-    <table class="table table-bordered">
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>Transaction Form</title>
+  </head>
+  <body>
+      <h1>Add Transaction</h1>
+      <h3>{%- for message in get_flashed_messages() %}
+        {{ message }}
+     {%- endfor %}</h3>
+      <form method="POST">
+          {{ form.hidden_tag() }}
+          <p>
+              {{ form.type.label }}<br>
+              {{ form.type }}
+              {% for error in form.type.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+          </p>
+          <p>
+              {{ form.amount.label }}<br>
+              {{ form.amount }}
+              {% for error in form.amount.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+          </p>
+          <p>
+              {{ form.category.label }}<br>
+              {{ form.category }}
+              {% for error in form.category.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+          </p>
+          <p>
+              {{ form.date.label }}<br>
+              {{ form.date }}
+              {% for error in form.date.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+          </p>
+          <p>
+              {{ form.description.label }}<br>
+              {{ form.description }}
+              {% for error in form.description.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+          </p>
+          <p>{{ form.submit }}</p>
+      </form>
       
-      <tbody>
-        <tr>
-          <td><label for="type">Type:</label></td>
-          <td><input type="text" id="type" name="type"><br><br></td>
-        </tr>
-        <tr>
-        <tr>
-          <td><label for="amount">Amount:</label></td>
-          <td><input type="number" id="amount" name="amount" required><br><br></td>
-        </tr>
-        <tr>
-          <td><label for="category">Category:</label></td>
-          <td><input type="text" id="category" name="category"><br><br></td>
-        </tr>
-          <td><label for="description">Description:</label></td>
-          <td><textarea id="description" name="description"></textarea><br><br></td>
-        </tr>
-        <tr>
-          <td><input type="submit" value="Submit">
-          </td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
-  </div>
-{% endblock %}
+  </body>
+  </html>

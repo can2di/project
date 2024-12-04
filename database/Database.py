@@ -79,6 +79,7 @@ class Database:
         self.cursor.execute(query, (id,))
         print(id)
         result = self.cursor.fetchone()
+        print(result)
         return result
     
     def delete_expense(self, id):
