@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
 <body>
-    <h3>You not logged in Register</h3>
-
-    {% with messages = get_flashed_messages(with_categories=True) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="alert
- alert-{{ category }}">
-              {{ message }}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
+    <h1>Register</h1>
     <form method="POST">
-        {{ form.hidden_tag()
- }}  
+        {{ form.hidden_tag() }}
         <div class="form-group">
-            {{ form.user.label }} {{ form.user(size=30) }}
-            {% if form.user.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ form.user.errors[0] }}
-                </div>
-            {% endif %}
+            {{ form.username.label }}<br>
+            {{ form.username(size=30) }}
+            {% for error in form.username.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
         </div>
         <div class="form-group">
-            {{ form.password.label }} {{ form.password(size=30) }}
-            {% if form.password.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ form.password.errors[0] }}
-                </div>
-            {% endif %}
+            {{ form.email.label }}<br>
+            {{ form.email(size=30) }}
+            {% for error in form.email.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
         </div>
-       
-        {{ form.submit }}
+        <div class="form-group">
+            {{ form.password.label }}<br>
+            {{ form.password(size=30) }}
+            {% for error in form.password.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=30) }}
+            {% for error in form.confirm_password.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.submit() }}
+        </div>
     </form>
 </body>
 </html>
