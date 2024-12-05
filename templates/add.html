@@ -3,7 +3,8 @@
 {% block content %}
 
   
-      <h1>Add Transaction</h1>
+<div class="container">  
+    <h1>Add Transaction</h1>
       <h3>{%- for message in get_flashed_messages() %}
         {{ message }}
      {%- endfor %}</h3>
@@ -46,5 +47,6 @@
           </p>
           <p>{{ form.submit }}</p>
       </form>
+      </div>
       
       {% endblock %}

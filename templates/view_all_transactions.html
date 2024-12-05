@@ -1,41 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Transaction History</title>
-    
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block content %}
+<div class="container">
     <h1>Transaction History</h1>
 
-    <table>
+    <!-- <table style="width: 80%; border-collapse: collapse;"> -->
+      <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
+          <tr>
+            <th style="border: 1px solid black;">Type</th>
+            <th style="border: 1px solid black;">Amount</th>
+            <th style="border: 1px solid black;">Category</th>
+            <th style="border: 1px solid black;">Date</th>
+            <th style="border: 1px solid black;">Description</th>
+            <th style="border: 1px solid black;">Actions</th>
+          </tr>
         </thead>
         <tbody>
-            {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.type }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.category }}</td>
-                <td>{{ transaction.date }}</td>
-                <td>{{ transaction.description }}</td>
-                <td>
-                    <a href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
-                    |
-                    <a href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a>   
-    
-                </td>
-            </tr>
-            {% endfor %}
+          {% for transaction in transactions %}
+          <tr>
+            <td style="border: 1px solid black;">{{ transaction.type }}</td>
+            <td style="border: 1px solid black;">{{ transaction.amount }}</td>
+            <td style="border: 1px solid black;">{{ transaction.category }}</td>
+            <td style="border: 1px solid black;">{{ transaction.date }}</td>
+            <td style="border: 1px solid black;">{{ transaction.description }}</td>
+            <td style="border: 1px solid black;">
+              <a href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
+              |
+              <a href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a> 
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-</body>
-</html>
+      </table>
+    </div>
+    {% endblock %}

@@ -12,13 +12,41 @@ class Controller:
 
         # Initialize Flask-Login
         login_manager = LoginManager(app)
-        login_manager.login_view = 'index'  # Specify the login view
+        login_manager.login_view = 'index' 
 
         @login_manager.user_loader
         def load_user(user_id):
             return User.query.get(int(user_id)) 
 
+        @app.route('/login', methods=['GET', 'POST'])
+        def login():
+            form = LoginForm()
+            if form.validate_on_submit():
+                user = User.query.filter_by(username=form.username.data).first()
+                if user and user.check_password(form.password.data):
+                    login_user(user, remember=form.remember_me.data)
+                    return redirect(url_for('index')) 
+                else:
+                    flash('Invalid username or password', 'danger')
+                    return redirect(url_for('manage'))
+            return render_template('login.html', form=form)
+        
+        
+        @app.route('/logout')
+        def logout():
+            logout_user()
+            return redirect(url_for('login')) 
+        
 
+        @app.route('/register', methods=['GET', 'POST'])
+        def register():
+            form = RegisterForm()
+            if form.validate_on_submit():
+                user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for('login'))
+            return render_template('register.html', form=form)
 
         @app.route('/', methods=['GET', 'POST'])
         def index():
@@ -42,13 +70,12 @@ class Controller:
                 db.session.commit()
 
                 flash('Transaction successfully added!')
-                return render_template('add.html', form=tform)  # Render after successful submission
-            # return render_template('add.html', form=tform)  # Render the form on GET request
+                return render_template('add.html', form=tform)  
             return render_template('add.html', form=tform)
         
-        @self.app.route('/manage')
+        @self.app.route('/view')
         def manage():
-            transactions = Transaction.query.all()  # Fetch all transactions
+            transactions = Transaction.query.all() 
             return render_template('view_all_transactions.html', transactions=transactions)
 
         
@@ -77,36 +104,5 @@ class Controller:
             flash('Transaction deleted successfully!')
             return redirect(url_for('manage'))
         
-        @app.route('/login', methods=['GET', 'POST'])
-        def login():
-            form = LoginForm()
-            if form.validate_on_submit():
-                user = User.query.filter_by(username=form.username.data).first()
-                if user and user.check_password(form.password.data):
-                    login_user(user, remember=form.remember_me.data)
-                    return redirect(url_for('index'))  # Replace 'index' with your desired redirect
-                else:
-                    flash('Invalid username or password', 'danger')
-                    return redirect(url_for('manage'))
-            return render_template('login.html', form=form)
         
-        
-        @app.route('/logout')
-        def logout():
-            logout_user()
-            return redirect(url_for('login')) 
-        
-
-        @app.route('/register', methods=['GET', 'POST'])
-        def register():
-            form = RegisterForm()
-            if form.validate_on_submit():
-        # Create a new user instance
-                user = User(username=form.username.data, email=form.email.data, password=form.password.data)
-        # Add the new user to the database
-                db.session.add(user)
-                db.session.commit()
-        # Redirect to a success page or login page
-                return redirect(url_for('login'))
-            return render_template('register.html', form=form)
         
