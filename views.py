@@ -2,47 +2,30 @@ from flask import Flask, render_template, request, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
 from models import User, Transaction, db
 from forms import UserForm, TransactionForm, LoginForm, RegisterForm
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+
+
 class Controller:
 
     def __init__(self, app):
         self.app = app
 
+        # Initialize Flask-Login
+        login_manager = LoginManager(app)
+        login_manager.login_view = 'index'  # Specify the login view
+
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id)) 
+
+
+
         @app.route('/', methods=['GET', 'POST'])
-        def logins():
-            form = UserForm()
-            print('right')
-            if form.validate_on_submit():
-                user = User.query.filter_by(user=form.user.data).first()
-                print('right')
-                if user and user.check_password(form.password.data):
-                    login_user(user)
-                    flash('Login successful!')
-                    print('right')
-                    return redirect(url_for('manage'))
-  
-                else:
-                    flash('Invalid username or password')
-                    print('Wrong')
-                    return render_template('register.html')
-            print('dasd')
-            return render_template('login.html')
+        def index():
+            
+            return render_template('index.html')
 
 
-
-        # @app.route('/register', methods=['GET', 'POST'])
-        # def register():
-        #     form = RegisterForm() 
-        #     if form.validate_on_submit():  # Check if form data is valid
-        #         userAA = User(user=form.user.data,
-        #                   password=form.password.data)
-        #         userAA.set_password(password=form.password.data)
-        #         db.session.add(userAA)
-        #         db.session.commit()
-        #         flash('Record was successfully added')
-
-        #         return render_template('register.html', form=form)
-        #     return render_template('register.html', form=form)
-        
         
         @app.route('/add', methods=['GET', 'POST'])
         def add():
@@ -60,12 +43,14 @@ class Controller:
 
                 flash('Transaction successfully added!')
                 return render_template('add.html', form=tform)  # Render after successful submission
-            return render_template('add.html', form=tform)  # Render the form on GET request
+            # return render_template('add.html', form=tform)  # Render the form on GET request
+            return render_template('add.html', form=tform)
         
         @self.app.route('/manage')
         def manage():
             transactions = Transaction.query.all()  # Fetch all transactions
             return render_template('view_all_transactions.html', transactions=transactions)
+
         
         @app.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
         def edit_transaction(transaction_id):
@@ -83,6 +68,7 @@ class Controller:
                 return redirect(url_for('manage'))
 
             return render_template('edit_transaction.html', form=form)
+
         
         @app.route('/delete/<int:transaction_id>')
         def delete_transaction(transaction_id):
@@ -98,11 +84,17 @@ class Controller:
                 user = User.query.filter_by(username=form.username.data).first()
                 if user and user.check_password(form.password.data):
                     login_user(user, remember=form.remember_me.data)
-                    return redirect(url_for('add'))  # Replace 'index' with your desired redirect
+                    return redirect(url_for('index'))  # Replace 'index' with your desired redirect
                 else:
                     flash('Invalid username or password', 'danger')
                     return redirect(url_for('manage'))
             return render_template('login.html', form=form)
+        
+        
+        @app.route('/logout')
+        def logout():
+            logout_user()
+            return redirect(url_for('login')) 
         
 
         @app.route('/register', methods=['GET', 'POST'])

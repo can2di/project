@@ -1,16 +1,13 @@
-from sqlalchemy import Column, Integer, String  # Import String
+from sqlalchemy import Column, Integer, String 
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager
+
+
 
 db = SQLAlchemy()
 
-# class User(db.Model):  # Inherit from db.Model
-#     __tablename__ = 'users'
 
-#     id = db.Column(Integer, primary_key=True)
-#     user = db.Column(String(100), nullable=False)
-#     password = db.Column(String(50), nullable=False)
-   
 
 
 class User(db.Model):
@@ -28,6 +25,9 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.id}>"
+    
+    def get_id(self):
+        return str(self.id)
 
     def __init__(self, username, email, password):
         self.username = username
@@ -35,18 +35,6 @@ class User(db.Model):
         self.set_password(password)
 
 
-# class User(db.Model):
-#     # ... other fields (username, email, etc.)
-
-#     password_hash = db.Column(db.String(128), nullable=False)
-
-#     def set_password(self, password):
-#         """Hashes a password and stores the hash in the password_hash field."""
-#         self.password_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         """Checks if a provided password matches the stored hash."""
-#         return check_password_hash(self.password_hash, password)
 
 class Transaction(db.Model):  # Inherit from db.Model
     __tablename__ = 'transactions'
