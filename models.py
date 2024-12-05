@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String 
+from sqlalchemy import Column, Integer, String, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
@@ -43,6 +43,7 @@ class Transaction(db.Model):  # Inherit from db.Model
     type = db.Column(String(100), nullable=False)
     amount = db.Column(String(100), nullable=False)
     category = db.Column(String(50), nullable=False)
+    # category_id = db.Column(Integer, ForeignKey('categories.id'), nullable=False)
     date = db.Column(String(50), nullable=False)
     description = db.Column(String(50), nullable=False)
    
@@ -60,3 +61,15 @@ class Transaction(db.Model):  # Inherit from db.Model
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(50), nullable=False)
+
+    # Define a foreign key relationship with Transaction model
+    # transactions = db.relationship('Transaction', backref='category', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return f"<Category {self.name}>"

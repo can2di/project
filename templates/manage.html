@@ -3,56 +3,27 @@
 {% block content %}
 
 
-<div class="container">
-  <h2>Manage Categories</h2>
-  <p></p>            
-  <form>
-    <table class="table table-bordered">
-      
-      <tbody>
-        <tr>
-          <td><label for="category-name">Category Name:</label></td>
-          <td><input type="text" id="category-name" name="category-name"></td>
-        </tr>
-        <tr>
-          <td><button type="submit">Add Category</button></td>
-        </tr>
-        
-      </tbody>
-    </table>
-  </form>
-  
+<div class="container">          
+  <h1>Manage Categories</h1>
 
+  <form method="POST">
+      {{ form.hidden_tag() }}
+      {{ form.name.label }}
+      {{ form.name(size=32) }}
+      {% if form.name.errors %}
+          {% for error in form.name.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      {% endif %}
+      {{ form.submit() }}
+  </form>
 
   <h2>Existing Categories</h2>
-  <p></p>            
-  
-  
-
-<form>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-          <th>ID</th>
-          <th>Amount</th>
-          <th>Category</th>
-          <th>Date</th>
-          <th>Description</th>
-      </tr>
-  </thead>
-    
-    <tbody>
-      {% for row in data %}
-      <tr>
-          <td>{{ row[0] }}</td>
-          <td>{{ row[1] }}</td>
-          <td>{{ row[2] }}</td>
-          <td>{{ row[3] }}</td>
-          <td>{{ row[4] }}</td>
-      </tr>
-      {% endfor %}
-  </tbody>
-  </table>
-</form>
+  {% if category %}
+      <table>  {% for cat in category %}
+              <tr>  <td>{{ cat.name }}</td>  </tr>  {% endfor %}
+      </table>  {% else %}
+      <p>No categories found.</p>
+  {% endif %}
 </div>
 {% endblock %}

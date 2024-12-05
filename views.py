@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
-from models import User, Transaction, db
-from forms import UserForm, TransactionForm, LoginForm, RegisterForm
+from models import User, Transaction, Category, db
+from forms import UserForm, TransactionForm, CategoryForm, LoginForm, RegisterForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 
@@ -103,6 +103,22 @@ class Controller:
             transaction.delete()
             flash('Transaction deleted successfully!')
             return redirect(url_for('manage'))
+        
+
+        @app.route('/manage', methods=['GET', 'POST'])
+        # @login_required  # Add this decorator if you have login functionality
+        def add_category():
+            form = CategoryForm()
+            if form.validate_on_submit():
+                new_category = Category(name=form.name.data)
+    
+                # if current_user:
+                #     new_category.user_id = current_user.id
+                db.session.add(new_category)
+                db.session.commit()
+                category = Category.query.all() 
+                render_template('manage.html', form=form, category=category) 
+            return render_template('manage.html', form=form)
         
         
         
