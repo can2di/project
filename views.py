@@ -96,10 +96,9 @@ class Controller:
             form = LoginForm()
             if form.validate_on_submit():
                 user = User.query.filter_by(username=form.username.data).first()
-                
                 if user and user.check_password(form.password.data):
                     login_user(user, remember=form.remember_me.data)
-                    return redirect(url_for('manage'))  # Replace 'index' with your desired redirect
+                    return redirect(url_for('add'))  # Replace 'index' with your desired redirect
                 else:
                     flash('Invalid username or password', 'danger')
                     return redirect(url_for('manage'))
