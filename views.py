@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
 from models import User, Transaction, Category, db
-from forms import UserForm, TransactionForm, CategoryForm, LoginForm, RegisterForm
+from forms import TransactionForm, CategoryForm, LoginForm, RegisterForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 
 

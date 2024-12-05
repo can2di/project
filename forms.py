@@ -3,32 +3,27 @@ from wtforms import StringField, SubmitField, validators, SelectField, PasswordF
 from wtforms.validators import DataRequired, Email, Length, ValidationError, EqualTo
 
 
-class UserForm(FlaskForm):
-    user = StringField('user', validators=[validators.DataRequired()])
-    password = StringField('password', validators=[validators.DataRequired()]) 
-    submit = SubmitField('Submit')
-
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', validators=[Length(min=4, max=25)])
+    password = PasswordField('Password', validators=[Length(min=4, max=25)])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=25)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    username = StringField('Username', validators=[Length(min=4, max=25)])
+    email = StringField('Email', validators=[Email()])
+    password = PasswordField('Password', validators=[Length(min=6)])
+    confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')])
     submit = SubmitField('Register')
 
 class TransactionForm(FlaskForm):
     type = SelectField('Type', choices=[('Expense', 'Expense'), ('Income', 'Income')], validators=[DataRequired()])
-    amount = StringField('Amount', validators=[DataRequired(), Length(min=1, max=10)])  
-    category = StringField('Category', validators=[DataRequired()])
+    amount = StringField('Amount', validators=[Length(min=1, max=10)])  
+    category = StringField('Category', validators=[Length(min=4, max=25)])
     date = StringField('Date', validators=[DataRequired()])  
-    description = StringField('Description', validators=[DataRequired()])
+    description = StringField('Description', validators=[Length(min=1, max=25)])
     submit = SubmitField('Submit')
 
 class CategoryForm(FlaskForm):
-    name = StringField('Category Name', validators=[DataRequired()])
+    name = StringField('Category Name', validators=[Length(min=1, max=25)])
     submit = SubmitField('Add Category')
