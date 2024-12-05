@@ -1,11 +1,8 @@
+{% extends "base.html" %}
 
+{% block content %}
 
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>Transaction Form</title>
-  </head>
-  <body>
+  
       <h1>Add Transaction</h1>
       <h3>{%- for message in get_flashed_messages() %}
         {{ message }}
@@ -50,5 +47,4 @@
           <p>{{ form.submit }}</p>
       </form>
       
-  </body>
-  </html>
+      {% endblock %}
