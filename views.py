@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, url_for, redirect
 from flask_login import login_user, login_required, logout_user
 from models import User, Transaction, Category, db
-from forms import TransactionForm, CategoryForm, LoginForm, RegisterForm
+from forms import TransactionForm, CategoryForm, ReportForm, LoginForm, RegisterForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 import matplotlib.pyplot as plt
 import io
@@ -31,7 +31,7 @@ class Controller:
                     return redirect(url_for('index')) 
                 else:
                     flash('Invalid username or password', 'danger')
-                    return redirect(url_for('manage'))
+                    return redirect(url_for('login'))
             return render_template('login.html', form=form)
         
         
@@ -85,7 +85,7 @@ class Controller:
         @app.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
         def edit_transaction(transaction_id):
             transaction = Transaction.query.get_or_404(transaction_id)
-            form = TransactionForm(obj=transaction)  # Pre-fill the form with transaction data
+            form = TransactionForm(obj=transaction)  
 
             if form.validate_on_submit():
                 transaction.type = form.type.data
@@ -109,29 +109,23 @@ class Controller:
         
 
         @app.route('/manage', methods=['GET', 'POST'])
-        # @login_required  # Add this decorator if you have login functionality
         def add_category():
             form = CategoryForm()
+            category = Category.query.all() 
             if form.validate_on_submit():
-                new_category = Category(name=form.name.data)
-    
-                # if current_user:
-                #     new_category.user_id = current_user.id
+                new_category = Category(name=form.name.data) 
                 db.session.add(new_category)
                 db.session.commit()
                 category = Category.query.all() 
                 render_template('manage.html', form=form, category=category) 
-            return render_template('manage.html', form=form)
+            return render_template('manage.html', form=form, category=category)
         
 
         @app.route('/dashboard')
         def dashboard():
-        
             transactions = Transaction.query.all()
             income = 0
             expense = 0
-
-
             for transaction in transactions:
                 if transaction.type.lower() == 'income':
                     income += float(transaction.amount)  # Assuming amount is a string representing a number
@@ -139,13 +133,10 @@ class Controller:
                     expense += float(transaction.amount)
             labels = ['Income', 'Expense']
             values = [income, expense]
-            
             plt.bar(labels, values)
-            plt.xlabel('Category')
-            plt.ylabel('Amount')
+            plt.xlabel('Type')
+            plt.ylabel('Amount in £s')
             plt.title('Income vs Expense')
-
-    # Save the chart to a buffer in memory
             img = io.BytesIO()
             plt.savefig(img, format='png')
             img.seek(0)
@@ -153,7 +144,26 @@ class Controller:
             img_base64 = base64.b64encode(img.getvalue()).decode('utf-8')
 
             return render_template('dashboard.html', income=income, expense=expense, chart_image=img_base64)
+        
+        @app.route('/reports', methods=['GET', 'POST'])
+        def reports():
+            form = ReportForm()
 
-            # return render_template('dashboard.html', income=income, expense=expense)
+            if form.validate_on_submit():
+                type_filter = form.type.data
+
+        
+                if type_filter == 'income':
+                    transactions = Transaction.query.filter_by(type='Income').all()
+                elif type_filter == 'expense':
+                    transactions = Transaction.query.filter_by(type='Expense').all()
+                else:
+                    transactions = Transaction.query.all()
+
+                return render_template('reports.html', transactions=transactions, form=form)
+
+            return render_template('reports.html', form=form)
+
+           
         
         

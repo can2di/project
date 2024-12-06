@@ -22,8 +22,12 @@ class TransactionForm(FlaskForm):
     category = StringField('Category', validators=[Length(min=4, max=25)])
     date = StringField('Date', validators=[DataRequired()])  
     description = StringField('Description', validators=[Length(min=1, max=25)])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add Transaction')
 
 class CategoryForm(FlaskForm):
     name = StringField('Category Name', validators=[Length(min=1, max=25)])
     submit = SubmitField('Add Category')
+
+class ReportForm(FlaskForm):
+    type = SelectField('Filter by Type', choices=[('all', 'All'), ('income', 'Income'), ('expense', 'Expense')])
+    submit = SubmitField('Filter By Type')

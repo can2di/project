@@ -5,8 +5,9 @@
     <h2>Dashboard</h2>
     <table class="table">
     
-    <p>Total Income: {{ income }}</p>
-    <p>Total Expense: {{ expense }}</p>
+    <p style="color: green;">Total Income: £{{ income }}</p>
+    <p style="color: red;">Total Expense: £{{ expense }}</p>
+    <p>Total Budget: £ {{ income - expense }}</p>
     {% if chart_image %}
         <img src="data:image/png;base64,{{ chart_image }}" alt="Income vs Expense Chart">
     {% endif %}

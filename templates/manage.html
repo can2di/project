@@ -4,26 +4,31 @@
 
 
 <div class="container">          
-  <h1>Manage Categories</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.name.label }} {{ form.name }}
+        <span style="color: red;">{{ form.name.errors }}</span>
+        {{ form.submit }}
+    </form>
 
-  <form method="POST">
-      {{ form.hidden_tag() }}
-      {{ form.name.label }}
-      {{ form.name(size=32) }}
-      {% if form.name.errors %}
-          {% for error in form.name.errors %}
-              <span style="color: red;">[{{ error }}]</span>
+
+    <h2>All Existing Categories</h2>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="border: 1px solid black;">Category</th>
+          
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for category in category %}
+          <tr>
+            <td style="border: 1px solid black;">{{ category.name }}</td>
+            
+          </tr>
           {% endfor %}
-      {% endif %}
-      {{ form.submit() }}
-  </form>
-
-  <h2>Existing Categories</h2>
-  {% if category %}
-      <table>  {% for cat in category %}
-              <tr>  <td>{{ cat.name }}</td>  </tr>  {% endfor %}
-      </table>  {% else %}
-      <p>No categories found.</p>
-  {% endif %}
+        </tbody>
+      </table>
 </div>
 {% endblock %}
