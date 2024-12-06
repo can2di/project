@@ -1,55 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Transaction</title>
-</head>
-<body>
-    <h1>Edit Transaction</h1>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <!-- <table style="width: 80%; border-collapse: collapse;"> -->
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th style="border: 1px solid black;">{{ form.type.label }}</th>
-                <td style="border: 1px solid black;">{{ form.type(size=32) }}</td>
-                {% if form.type.errors %}
-                  {% for error in form.type.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                {% endif %}
-                <th style="border: 1px solid black;">{{ form.amount.label }}</th>
-                <td style="border: 1px solid black;">{{ form.amount(size=32) }}</td>
-                {% if form.amount.errors %}
-                  {% for error in form.amount.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                {% endif %}
-                <th style="border: 1px solid black;">{{ form.category.label }}</th>
-                <td style="border: 1px solid black;">{{ form.category(size=32) }}</td>
-                {% if form.category.errors %}
-                  {% for error in form.category.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                {% endif %}
-                <th style="border: 1px solid black;">{{ form.date.label }}</th>
-                <td style="border: 1px solid black;">{{ form.date(size=32) }}</td>
-                {% if form.date.errors %}
-                  {% for error in form.date.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                {% endif %}
-                <th style="border: 1px solid black;">{{ form.description.label }}</th>
-                <td style="border: 1px solid black;">{{ form.description(size=32) }}</td>
-                {% if form.description.errors %}
-                  {% for error in form.description.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                {% endif %}
-              </tr>
-            </tbody>
-          </table>
-        <p>{{ form.submit() }}</p>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Edit Transaction</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <!-- <th class="table-header">{{ form.type.label }}</th> -->
+          <td style="border: 1px solid black; height: 50px;">{{ form.type }}</td>
+          {% if form.type.errors %}
+            {% for error in form.type.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          {% endif %}
+          <!-- <th class="table-header">{{ form.amount.label }}</th> -->
+          <td style="border: 1px solid black; height: 50px;">{{ form.amount(size=32) }}</td>
+          {% if form.amount.errors %}
+            {% for error in form.amount.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          {% endif %}
+          <!-- <th class="table-header">{{ form.category.label }}</th> -->
+          <td style="border: 1px solid black; height: 50px;">{{ form.category(size=32) }}</td>
+          {% if form.category.errors %}
+            {% for error in form.category.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          {% endif %}
+          <!-- <th class="table-header">{{ form.date.label }}</th> -->
+          <td style="border: 1px solid black; height: 50px;">{{ form.date(size=32) }}</td>
+          {% if form.date.errors %}
+            {% for error in form.date.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          {% endif %}
+          <!-- <th class="table-header">{{ form.description.label }}</th> -->
+          <td style="border: 1px solid black; height: 50px;">{{ form.description(size=32) }}</td>
+          {% if form.description.errors %}
+            {% for error in form.description.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+  
+    <p>{{ form.submit() }}</p>
+  </div>
+  </form>
+
+    {% endblock %}

@@ -4,61 +4,13 @@
 <div class="container">
     <h2>Dashboard</h2>
     <table class="table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Money Spent</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-
-      <!-- <tbody>
-        {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            {% if row[1] <= 500 %}
-                <td>Low Value: {{ row[1] }}</td>
-            {% elif row[1] <= 1000 %}
-                <td>Medium Value: {{ row[1] }}</td>
-            {% else %}
-                <td>High Value: {{ row[1] }}</td>
-            {% endif %}
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-        </tr>
-        {% endfor %}
-      </tbody> -->
-
-
-      <tbody>
-            
-        <tr class="success">
-            <td>10/09/2024</td>
-            <td>£4</td>
-            <td>Great</td>
-        </tr>
-        <tr class="danger">
-            <td>10/11/2024</td>
-            <td>£34</td>
-            <td>Too high</td>
-        </tr>
-        <tr class="info">
-            <td>10/12/2024</td>
-            <td>£14</td>
-            <td>OK</td>
-        </tr>
-        <tr class="warning">
-            <td>10/09/2024</td>
-            <td>£20</td>
-            <td>Be careful</td>
-        </tr>
-        <tr class="success">
-            <td>10/09/2024</td>
-            <td>£8</td>
-            <td>Great</td>
-        </tr>    
-      </tbody>
+    
+    <p>Total Income: {{ income }}</p>
+    <p>Total Expense: {{ expense }}</p>
+    {% if chart_image %}
+        <img src="data:image/png;base64,{{ chart_image }}" alt="Income vs Expense Chart">
+    {% endif %}
+</body>
     </table>
   </div>
 

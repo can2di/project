@@ -3,6 +3,9 @@ from flask_login import login_user, login_required, logout_user
 from models import User, Transaction, Category, db
 from forms import TransactionForm, CategoryForm, LoginForm, RegisterForm
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+import matplotlib.pyplot as plt
+import io
+import base64
 
 
 class Controller:
@@ -120,5 +123,37 @@ class Controller:
                 render_template('manage.html', form=form, category=category) 
             return render_template('manage.html', form=form)
         
+
+        @app.route('/dashboard')
+        def dashboard():
+        
+            transactions = Transaction.query.all()
+            income = 0
+            expense = 0
+
+
+            for transaction in transactions:
+                if transaction.type.lower() == 'income':
+                    income += float(transaction.amount)  # Assuming amount is a string representing a number
+                else:
+                    expense += float(transaction.amount)
+            labels = ['Income', 'Expense']
+            values = [income, expense]
+            
+            plt.bar(labels, values)
+            plt.xlabel('Category')
+            plt.ylabel('Amount')
+            plt.title('Income vs Expense')
+
+    # Save the chart to a buffer in memory
+            img = io.BytesIO()
+            plt.savefig(img, format='png')
+            img.seek(0)
+            plt.close()
+            img_base64 = base64.b64encode(img.getvalue()).decode('utf-8')
+
+            return render_template('dashboard.html', income=income, expense=expense, chart_image=img_base64)
+
+            # return render_template('dashboard.html', income=income, expense=expense)
         
         
