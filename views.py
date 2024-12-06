@@ -15,19 +15,27 @@ class Controller:
 
         # Initialize Flask-Login
         login_manager = LoginManager(app)
-        login_manager.login_view = 'index' 
+        login_manager.login_view = 'login'
+        @login_manager.user_loader
+        
 
         @login_manager.user_loader
         def load_user(user_id):
-            return User.query.get(int(user_id)) 
+            return User.query.get(int(user_id))
 
         @app.route('/login', methods=['GET', 'POST'])
         def login():
             form = LoginForm()
             if form.validate_on_submit():
-                user = User.query.filter_by(username=form.username.data).first()
+                user = User.query.filter_by(username=form.username.data).first()               
                 if user and user.check_password(form.password.data):
+                    print(user.username)
+                    # if user.is_active == True:
+                    #     print(user.username)
+
                     login_user(user, remember=form.remember_me.data)
+                    # if user.is_active == True:
+                    #     print(user.username)
                     return redirect(url_for('index')) 
                 else:
                     flash('Invalid username or password', 'danger')
@@ -52,13 +60,12 @@ class Controller:
             return render_template('register.html', form=form)
 
         @app.route('/', methods=['GET', 'POST'])
-        def index():
-            
+        @login_required
+        def index():           
             return render_template('index.html')
-
-
-        
+       
         @app.route('/add', methods=['GET', 'POST'])
+        @login_required
         def add():
             tform = TransactionForm()
             if tform.validate_on_submit():
@@ -77,6 +84,7 @@ class Controller:
             return render_template('add.html', form=tform)
         
         @self.app.route('/view')
+        @login_required
         def manage():
             transactions = Transaction.query.all() 
             return render_template('view_all_transactions.html', transactions=transactions)
@@ -107,8 +115,8 @@ class Controller:
             flash('Transaction deleted successfully!')
             return redirect(url_for('manage'))
         
-
         @app.route('/manage', methods=['GET', 'POST'])
+        @login_required
         def add_category():
             form = CategoryForm()
             category = Category.query.all() 
@@ -122,6 +130,7 @@ class Controller:
         
 
         @app.route('/dashboard')
+        @login_required
         def dashboard():
             transactions = Transaction.query.all()
             income = 0
@@ -146,6 +155,7 @@ class Controller:
             return render_template('dashboard.html', income=income, expense=expense, chart_image=img_base64)
         
         @app.route('/reports', methods=['GET', 'POST'])
+        @login_required
         def reports():
             form = ReportForm()
 
