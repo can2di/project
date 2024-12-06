@@ -48,7 +48,7 @@ class Controller:
                 user = User(username=form.username.data, email=form.email.data, password=form.password.data)
                 db.session.add(user)
                 db.session.commit()
-                return redirect(url_for('login'))
+                return redirect(url_for('index'))
             return render_template('register.html', form=form)
 
         @app.route('/', methods=['GET', 'POST'])

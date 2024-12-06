@@ -14,7 +14,7 @@ class RegisterForm(FlaskForm):
     email = StringField('Email', validators=[Email()])
     password = PasswordField('Password', validators=[Length(min=6)])
     confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')])
-    submit = SubmitField('Register')
+    submit = SubmitField('Register/Login')
 
 class TransactionForm(FlaskForm):
     type = SelectField('Type', choices=[('Expense', 'Expense'), ('Income', 'Income')], validators=[DataRequired()])
